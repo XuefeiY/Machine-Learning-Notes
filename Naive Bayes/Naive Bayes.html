@@ -11861,19 +11861,42 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5.-Naive-Bayes-Model-under-Scikit-Learn-Library">5. Naive Bayes Model under Scikit Learn Library<a class="anchor-link" href="#5.-Naive-Bayes-Model-under-Scikit-Learn-Library">&#182;</a></h2><p><strong>Gaussian:</strong> A Gaussian Naive Bayes algorithm is a special type of NB algorithm. It’s specifically used when the features have continuous values. It’s also assumed that all the features are following a gaussian distribution i.e, normal distribution.</p>
-<p><strong>Multinomial:</strong> It is used for discrete counts. For example, let’s say,  we have a text classification problem. Here we can consider bernoulli trials which is one step further and instead of “word occurring in the document”, we have “count how often word occurs in the document”, you can think of it as “number of times outcome number $x_i$ is observed over the n trials”.</p>
-<p><strong>Bernoulli:</strong> The binomial model is useful if your feature vectors are binary (i.e. zeros and ones). One application would be text classification with ‘bag of words’ model where the 1s &amp; 0s are “word occurs in the document” and “word does not occur in the document” respectively.</p>
+<h2 id="5.-Improvement">5. Improvement<a class="anchor-link" href="#5.-Improvement">&#182;</a></h2><ul>
+<li><strong>Transformation</strong>: If continuous features do not have normal distribution, we should use transformation or different methods to convert it in normal distribution.</li>
+<li><strong>Smoothing</strong>: If test data set has zero frequency issue, apply smoothing techniques “Laplace Correction” to predict the class of test data set.</li>
+<li><strong>Correlation</strong>: Remove correlated features, as the highly correlated features are voted twice in the model and it can lead to over inflating importance.</li>
+<li><strong>Pre-Processing</strong>: Naive Bayes classifiers has limited options for parameter tuning like alpha=1 for smoothing, fit_prior=[True|False] to learn class prior probabilities or not and some other options (look at detail here). I would recommend to focus on your  pre-processing of data and the feature selection.</li>
+<li><strong>Ensemble</strong>: You might think to apply some classifier combination technique like ensembling, bagging and boosting but these methods would not help. Actually, “ensembling, boosting, bagging” won’t help since their purpose is to reduce variance. Naive Bayes has no variance to minimize. NB ignores correlation among the features, which induces bias and hence reduces variance.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6.-Naive-Bayes-Model-under-Scikit-Learn-Library">6. Naive Bayes Model under Scikit Learn Library<a class="anchor-link" href="#6.-Naive-Bayes-Model-under-Scikit-Learn-Library">&#182;</a></h2><ul>
+<li><p><strong>Gaussian:</strong> A Gaussian Naive Bayes algorithm is a special type of NB algorithm. It’s specifically used when the features have continuous values. It’s also assumed that all the features are following a gaussian distribution i.e, normal distribution.</p>
+</li>
+<li><p><strong>Multinomial:</strong> It is used for discrete counts. For example, let’s say,  we have a text classification problem. Here we can consider bernoulli trials which is one step further and instead of “word occurring in the document”, we have “count how often word occurs in the document”, you can think of it as “number of times outcome number $x_i$ is observed over the n trials”.</p>
+</li>
+<li><p><strong>Bernoulli:</strong> The binomial model is useful if your feature vectors are binary (i.e. zeros and ones). One application would be text classification with ‘bag of words’ model where the 1s &amp; 0s are “word occurs in the document” and “word does not occur in the document” respectively.</p>
+</li>
+</ul>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># =============================================================================</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Sample Code</span>
+
+<span class="c1"># =============================================================================</span>
 <span class="c1"># # Set Path</span>
 <span class="c1"># =============================================================================</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -11927,7 +11950,7 @@ div#notebook {
     <span class="n">adult_df_rev</span><span class="p">[</span><span class="n">value</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">adult_df_rev</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)[</span><span class="n">value</span><span class="p">][</span><span class="mi">2</span><span class="p">]],</span>
                                 <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
    
-<span class="c1">## One-Hot Encoder</span>
+<span class="c1">## Label Encoder</span>
 <span class="n">le</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelEncoder</span><span class="p">()</span>
 <span class="n">workclass_cat</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">adult_df</span><span class="o">.</span><span class="n">workclass</span><span class="p">)</span>
 <span class="n">education_cat</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">adult_df</span><span class="o">.</span><span class="n">education</span><span class="p">)</span>
@@ -12013,16 +12036,6 @@ div#notebook {
 <div class="output_area">
 <div class="prompt"></div>
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>C:\ProgramData\Anaconda3\lib\site-packages\sklearn\cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
-  &#34;This module will be removed in 0.20.&#34;, DeprecationWarning)
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>workclass : 1836
 education : 0
@@ -12038,7 +12051,7 @@ income : 0
 </div>
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[1]:</div>
+<div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -12061,6 +12074,7 @@ income : 0
 <p>Data Source: <a href="https://archive.ics.uci.edu/ml/datasets/Adult">https://archive.ics.uci.edu/ml/datasets/Adult</a></p>
 <p>Naive Bayes Documentation: <a href="http://scikit-learn.org/stable/modules/naive_bayes.html">http://scikit-learn.org/stable/modules/naive_bayes.html</a></p>
 <p>MultinomialNB Documentation: <a href="http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html">http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html</a></p>
+<p>Tutorial: <a href="https://www.analyticsvidhya.com/blog/2017/09/naive-bayes-explained/">https://www.analyticsvidhya.com/blog/2017/09/naive-bayes-explained/</a></p>
 
 </div>
 </div>
