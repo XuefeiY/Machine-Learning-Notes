@@ -3,9 +3,6 @@ Compledted:
 * Naive Bayes
 * Linear Regression and Regularization Methods
 
-Ongoing:
-* ANOVA
-
 To do:
 * Logistic Regression and Softmax Regression
 * Principal Component Analysis
