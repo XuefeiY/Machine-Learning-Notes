@@ -2,9 +2,9 @@
 Compledted:
 * Naive Bayes
 * Linear Regression and Regularization Methods
+* Logistic and Softmax Regression
 
 To do:
-* Logistic Regression and Softmax Regression
 * Principal Component Analysis
 * Tree-based Methods
 * Support Vector Machines
