@@ -12,3 +12,4 @@ To do:
 * Ensemble Method
 * Non-linear Model
 * Cluster Analysis
+* XGBoost
