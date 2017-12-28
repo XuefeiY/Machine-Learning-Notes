@@ -185,7 +185,7 @@ plt.axhline(y=0,linestyle='--',color='gray')
 plt.axhline(y=-1.96/np.sqrt(len(ts_log_diff)),linestyle='--',color='gray')
 plt.axhline(y=1.96/np.sqrt(len(ts_log_diff)),linestyle='--',color='gray')
 plt.title('Partial Autocorrelation Function')
-plt.tight_layout()
+plt.show()
 
 
 
@@ -214,3 +214,26 @@ results_ARIMA = model.fit(disp=-1)
 plt.plot(ts_log_diff)
 plt.plot(results_ARIMA.fittedvalues, color='red')
 plt.title('RSS: %.4f'% sum((results_ARIMA.fittedvalues-ts_log_diff)**2))
+
+
+# =============================================================================
+# Taking it back to origianl scale
+# =============================================================================
+predictions_ARIMA_diff = pd.Series(results_ARIMA.fittedvalues, copy=True)
+print (predictions_ARIMA_diff.head())
+
+
+predictions_ARIMA_diff_cumsum = predictions_ARIMA_diff.cumsum()
+print (predictions_ARIMA_diff_cumsum.head())
+
+
+predictions_ARIMA_log = pd.Series(ts_log.iloc[0], index=ts_log.index)
+predictions_ARIMA_log = predictions_ARIMA_log.add(predictions_ARIMA_diff_cumsum,fill_value=0)
+predictions_ARIMA_log.head()
+
+predictions_ARIMA = np.exp(predictions_ARIMA_log)
+plt.plot(ts, label='original')
+plt.plot(predictions_ARIMA, label='prediction')
+plt.legend(loc='best')
+plt.title('RMSE: %.4f'% np.sqrt(sum((predictions_ARIMA-ts)**2)/len(ts)))
+plt.show()
