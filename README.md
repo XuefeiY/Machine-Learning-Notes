@@ -4,12 +4,12 @@ Compledted:
 * Linear Regression and Regularization Methods
 * Logistic and Softmax Regression
 * Principal Component Analysis/Linear Discriminant Analysis/Factor Analysis
+* Time Series
+* Cluster Analysis
 
 To do:
-* Time Series
 * Tree-based Methods
 * Support Vector Machines
 * Ensemble Method
 * Non-linear Model
-* Cluster Analysis
 * XGBoost
