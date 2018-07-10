@@ -6,10 +6,10 @@ Compledted:
 * Principal Component Analysis/Linear Discriminant Analysis/Factor Analysis
 * Time Series
 * Cluster Analysis
+* Tree-based Methods
+* Ensemble Method
+* Support Vector Machines
 
 To do:
-* Tree-based Methods
-* Support Vector Machines
-* Ensemble Method
 * Non-linear Model
 * XGBoost
