@@ -9,7 +9,9 @@ Compledted:
 * Tree-based Methods
 * Ensemble Method
 * Support Vector Machines
+* XGBoost
 
 To do:
 * Non-linear Model
-* XGBoost
+* Word2Vec
+
